@@ -2,6 +2,7 @@ package com.spartacusapp;
 
 import com.facebook.react.ReactActivity;
 import com.facebook.react.BuildConfig;
+import android.os.Bundle;
 
 public class MainActivity extends ReactActivity {
 
@@ -12,5 +13,10 @@ public class MainActivity extends ReactActivity {
   @Override
   protected String getMainComponentName() {
     return "SpartacusApp";
+  }
+
+  @Override
+  protected void onCreate(Bundle savedInstanceState) {
+    super.onCreate(null);
   }
 }
