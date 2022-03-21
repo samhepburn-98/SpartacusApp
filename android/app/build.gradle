@@ -126,9 +126,10 @@ def enableHermes = project.ext.react.get("enableHermes", false);
 def nativeArchitectures = project.getProperties().get("reactNativeDebugArchitectures")
 
 android {
-    ndkVersion rootProject.ext.ndkVersion
+    compileSdkVersion 30
+    buildToolsVersion "30.0.3"
 
-    compileSdkVersion rootProject.ext.compileSdkVersion
+    ndkVersion rootProject.ext.ndkVersion
 
     defaultConfig {
         applicationId "com.spartacusapp"

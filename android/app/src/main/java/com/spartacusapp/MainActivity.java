@@ -1,6 +1,7 @@
 package com.spartacusapp;
 
 import com.facebook.react.ReactActivity;
+import com.facebook.react.BuildConfig;
 
 public class MainActivity extends ReactActivity {
 
