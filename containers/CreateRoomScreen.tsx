@@ -1,17 +1,20 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Text, View } from "react-native";
-import { io } from "socket.io-client";
-import RoomCode from "../components/RoomCode";
 import UsersInRoom from "../components/UsersInRoom";
+import useSocket from "../hooks/useSocket";
 
 const CreateRoomScreen = () => {
-    const socket = io("http://localhost:3000");
-    socket.emit("createRoom");
+    const socket = useSocket();
+    const [roomCode, setRoomCode] = useState();
+
+    useEffect(() => {
+        socket.emit("createRoom", setRoomCode);
+    }, [socket]);
 
     return (
         <View>
             <Text>Create Room</Text>
-            <RoomCode socket={socket}/>
+            <Text>{roomCode}</Text>
             <UsersInRoom/>
         </View>
     );
