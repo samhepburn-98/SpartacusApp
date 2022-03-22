@@ -3,6 +3,7 @@ import { StyleSheet, useColorScheme } from "react-native";
 
 import { Colors } from "react-native/Libraries/NewAppScreen";
 import Navigation from "./navigation/Navigation";
+import { SocketProvider } from "./providers/SocketProvider";
 
 
 const App = () => {
@@ -13,7 +14,9 @@ const App = () => {
     };
 
     return (
-        <Navigation/>
+        <SocketProvider>
+            <Navigation/>
+        </SocketProvider>
     );
 };
 
