@@ -5,17 +5,20 @@ import useSocket from "../hooks/useSocket";
 
 const CreateRoomScreen = () => {
     const socket = useSocket();
-    const [roomCode, setRoomCode] = useState();
+    const [roomCode, setRoomCode] = useState<string>();
 
     useEffect(() => {
         socket.emit("createRoom", setRoomCode);
+        return () => {
+            socket.emit("leaveRooms");
+        };
     }, [socket]);
 
     return (
         <View>
             <Text>Create Room</Text>
             <Text>{roomCode}</Text>
-            <UsersInRoom/>
+            <UsersInRoom roomCode={roomCode}/>
         </View>
     );
 };
