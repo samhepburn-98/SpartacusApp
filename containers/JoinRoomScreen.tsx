@@ -1,21 +1,45 @@
 import React, { useCallback, useEffect } from "react";
-import { Button, StyleSheet, Text, TextInput, View } from "react-native";
-import { Controller, useForm } from "react-hook-form";
+import { Alert, Button, Text, View } from "react-native";
+import { useForm } from "react-hook-form";
 import useSocket from "../hooks/useSocket";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import { RootStackParamList } from "../navigation/Navigation";
+import CodeInput from "../components/CodeInput";
 
-type FormData = {
+export type FormData = {
     roomCode: string;
 };
 
-const JoinRoomScreen = () => {
+type JoinRoomScreenProps = NativeStackScreenProps<RootStackParamList, "JoinRoom">;
+
+const JoinRoomScreen = ({ navigation }: JoinRoomScreenProps) => {
     const socket = useSocket();
 
     const { control, handleSubmit, formState: { errors } } = useForm<FormData>();
 
     const handleJoinRoom = useCallback((data) => {
-        socket.emit("joinRoom", data.roomCode);
+        if (errors !== {}) console.log("e", errors);
+        socket.emit("joinRoom", data.roomCode, navigateToLobby);
         console.log(data);
     }, []);
+
+    const navigateToLobby = (roomCode?: string) => {
+        // roomCode is only returned if the room already exists
+        if (roomCode) navigation.navigate("Lobby");
+        else Alert.alert(
+            "Alert Title",
+            "My Alert Msg",
+            [
+                {
+                    text: "Cancel",
+                    onPress: () => console.log("Cancel Pressed"),
+                    style: "cancel"
+                },
+                { text: "OK", onPress: () => console.log("OK Pressed") }
+            ]
+        );
+
+    };
 
     useEffect(() => {
         return () => {
@@ -28,22 +52,9 @@ const JoinRoomScreen = () => {
             <Text>
                 Join Room - I am {socket.id}
             </Text>
-            <Controller
-                control={control}
-                name="roomCode"
-                render={({ field: { onChange, onBlur, value } }) => (
-                    <TextInput
-                        style={styles.input}
-                        onBlur={onBlur}
-                        onChangeText={onChange}
-                        value={value}
-                    />
-                )}
-                rules={{
-                    required: true,
-                }}
-            />
-            {errors.roomCode && <Text>This is required.</Text>}
+            <CodeInput control={control}/>
+            {errors.roomCode?.types?.required && <Text>This is required.</Text>}
+            {errors.roomCode?.types?.minLength && <Text>Please enter all 4 characters.</Text>}
             <Button
                 onPress={handleSubmit(handleJoinRoom)}
                 title="Enter"
@@ -51,14 +62,5 @@ const JoinRoomScreen = () => {
         </View>
     );
 };
-
-const styles = StyleSheet.create({
-    input: {
-        height: 40,
-        margin: 12,
-        borderWidth: 1,
-        padding: 10,
-    },
-});
 
 export default JoinRoomScreen;

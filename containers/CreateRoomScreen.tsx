@@ -16,7 +16,7 @@ const CreateRoomScreen = () => {
 
     return (
         <View>
-            <Text>Create Room</Text>
+            <Text>Create Room - I am {socket.id}</Text>
             <Text>{roomCode}</Text>
             <UsersInRoom roomCode={roomCode}/>
         </View>
