@@ -1,3 +1,4 @@
+import { NativeBaseProvider } from "native-base";
 import React from "react";
 import { StyleSheet, useColorScheme } from "react-native";
 
@@ -14,9 +15,11 @@ const App = () => {
     };
 
     return (
-        <SocketProvider>
-            <Navigation/>
-        </SocketProvider>
+        <NativeBaseProvider>
+            <SocketProvider>
+                <Navigation/>
+            </SocketProvider>
+        </NativeBaseProvider>
     );
 };
 
