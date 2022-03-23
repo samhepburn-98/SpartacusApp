@@ -1,25 +1,23 @@
 import React from "react";
-import { Button, Text, View } from "react-native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "../navigation/Navigation";
+import { Button, Heading, VStack } from "native-base";
 
 type HomeScreenProps = NativeStackScreenProps<RootStackParamList, "Home">;
 
 const HomeScreen = ({ navigation }: HomeScreenProps) => {
     return (
-        <View>
-            <Text>
-                Home
-            </Text>
-            <Button
-                title="Go to Create Room"
-                onPress={() => navigation.navigate("CreateRoom")}
-            />
-            <Button
-                title="Go to Join Room"
-                onPress={() => navigation.navigate("JoinRoom")}
-            />
-        </View>
+        <VStack space={1} alignItems="center">
+            <Heading mb="4">Spartacus</Heading>
+            <Button shadow={2}
+                onPress={() => navigation.navigate("CreateRoom")}>
+                Go to Create Room
+            </Button>
+            <Button shadow={2}
+                onPress={() => navigation.navigate("JoinRoom")}>
+                Go to Join Room
+            </Button>
+        </VStack>
     );
 };
 
