@@ -1,10 +1,11 @@
 import React, { useCallback, useEffect } from "react";
-import { Alert, Button, Text, View } from "react-native";
+import { Alert, Button, Text } from "react-native";
 import { useForm } from "react-hook-form";
 import useSocket from "../hooks/useSocket";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "../navigation/Navigation";
 import CodeInput from "../components/CodeInput";
+import { VStack } from "native-base";
 
 export type FormData = {
     roomCode: string;
@@ -48,7 +49,7 @@ const JoinRoomScreen = ({ navigation }: JoinRoomScreenProps) => {
     }, [socket]);
 
     return (
-        <View>
+        <VStack space={1} alignItems="center">
             <Text>
                 Join Room - I am {socket.id}
             </Text>
@@ -59,7 +60,7 @@ const JoinRoomScreen = ({ navigation }: JoinRoomScreenProps) => {
                 onPress={handleSubmit(handleJoinRoom)}
                 title="Enter"
             />
-        </View>
+        </VStack>
     );
 };
 

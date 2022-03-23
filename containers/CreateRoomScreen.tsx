@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { Text, View } from "react-native";
+import { Text } from "react-native";
 import UsersInRoom from "../components/UsersInRoom";
 import useSocket from "../hooks/useSocket";
-import { Button } from "native-base";
+import { Button, VStack } from "native-base";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "../navigation/Navigation";
 
@@ -20,7 +20,7 @@ const CreateRoomScreen = ({ navigation }: CreateRoomScreenProps) => {
     }, [socket]);
 
     return (
-        <View>
+        <VStack space={1} alignItems="center">
             <Text>Create Room - I am {socket.id}</Text>
             <Text>{roomCode}</Text>
             <UsersInRoom roomCode={roomCode}/>
@@ -28,7 +28,7 @@ const CreateRoomScreen = ({ navigation }: CreateRoomScreenProps) => {
                 onPress={() => navigation.navigate("Game")}>
                 Ready
             </Button>
-        </View>
+        </VStack>
     );
 };
 
