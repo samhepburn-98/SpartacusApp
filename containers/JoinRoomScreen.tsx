@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useEffect } from "react";
 import { Button, StyleSheet, Text, TextInput, View } from "react-native";
 import { Controller, useForm } from "react-hook-form";
 import useSocket from "../hooks/useSocket";
@@ -17,10 +17,16 @@ const JoinRoomScreen = () => {
         console.log(data);
     }, []);
 
+    useEffect(() => {
+        return () => {
+            socket.emit("leaveRooms");
+        };
+    }, [socket]);
+
     return (
         <View>
             <Text>
-                Join Room
+                Join Room - I am {socket.id}
             </Text>
             <Controller
                 control={control}
