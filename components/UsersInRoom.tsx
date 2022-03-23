@@ -2,16 +2,20 @@ import React, { useEffect, useState } from "react";
 import { Text, View } from "react-native";
 import useSocket from "../hooks/useSocket";
 
-type UsersInRoom = {
+type UsersInRoomProps = {
     roomCode?: string;
 }
 
-const UsersInRoom = ({ roomCode }: UsersInRoom) => {
+const UsersInRoom = ({ roomCode }: UsersInRoomProps) => {
     const socket = useSocket();
     const [users, setUsers] = useState<string[]>([]);
 
     useEffect(() => {
-        if (roomCode) socket.emit("getUsers", roomCode, setUsers);
+        if (roomCode) socket.emit("getUsers", roomCode);
+        socket.on("usersInRoom", setUsers);
+        return () => {
+            socket.on("usersInRoom", setUsers);
+        };
     }, [socket, roomCode, setUsers]);
 
     return (
