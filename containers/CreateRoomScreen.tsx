@@ -2,8 +2,13 @@ import React, { useEffect, useState } from "react";
 import { Text, View } from "react-native";
 import UsersInRoom from "../components/UsersInRoom";
 import useSocket from "../hooks/useSocket";
+import { Button } from "native-base";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import { RootStackParamList } from "../navigation/Navigation";
 
-const CreateRoomScreen = () => {
+type CreateRoomScreenProps = NativeStackScreenProps<RootStackParamList, "JoinRoom">;
+
+const CreateRoomScreen = ({ navigation }: CreateRoomScreenProps) => {
     const socket = useSocket();
     const [roomCode, setRoomCode] = useState<string>();
 
@@ -19,6 +24,10 @@ const CreateRoomScreen = () => {
             <Text>Create Room - I am {socket.id}</Text>
             <Text>{roomCode}</Text>
             <UsersInRoom roomCode={roomCode}/>
+            <Button shadow={2}
+                onPress={() => navigation.navigate("Game")}>
+                Ready
+            </Button>
         </View>
     );
 };

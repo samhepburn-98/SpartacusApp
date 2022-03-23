@@ -5,10 +5,12 @@ import JoinRoomScreen from "../containers/JoinRoomScreen";
 import React from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import LobbyScreen from "../containers/LobbyScreen";
+import GameScreen from "../containers/GameScreen";
 
 export type RootStackParamList = {
-    Home: undefined;
     CreateRoom: undefined;
+    Game: undefined;
+    Home: undefined;
     JoinRoom: undefined;
     Lobby: undefined;
 };
@@ -23,6 +25,7 @@ const Navigation = () => {
                 <Stack.Screen name="CreateRoom" component={CreateRoomScreen}/>
                 <Stack.Screen name="JoinRoom" component={JoinRoomScreen}/>
                 <Stack.Screen name="Lobby" component={LobbyScreen}/>
+                <Stack.Screen name="Game" component={GameScreen}/>
             </Stack.Navigator>
         </NavigationContainer>
     );
