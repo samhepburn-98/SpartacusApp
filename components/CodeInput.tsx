@@ -33,7 +33,7 @@ const CodeInput = ({ control }: CodeInputProps) => {
                         onChangeText={onChange}
                         cellCount={CELL_COUNT}
                         rootStyle={styles.codeFieldRoot}
-                        keyboardType="number-pad"
+                        keyboardType="default"
                         textContentType="oneTimeCode"
                         renderCell={({ index, symbol, isFocused }) => (
                             <Text
