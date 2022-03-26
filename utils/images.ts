@@ -1,14 +1,12 @@
-import { PhotoIdentifiersPage } from "@react-native-community/cameraroll";
+import { PhotoIdentifier } from "@react-native-community/cameraroll";
 import ImageEditor from "@react-native-community/image-editor";
 import RNFS from "react-native-fs";
 
-export const getUri = async (imgs: PhotoIdentifiersPage) => {
-    //For now take the first
-    const selectedPhoto = imgs?.edges[0];
-    return await ImageEditor.cropImage(selectedPhoto.node.image.uri, {
+export const getUri = async (img: PhotoIdentifier) => {
+    return await ImageEditor.cropImage(img.node.image.uri, {
         size: {
-            width: selectedPhoto.node.image.width,
-            height: selectedPhoto.node.image.height
+            width: img.node.image.width,
+            height: img.node.image.height
         },
         offset: {
             x: 0,
