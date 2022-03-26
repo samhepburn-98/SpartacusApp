@@ -9,7 +9,7 @@ import GameScreen from "../containers/GameScreen";
 
 export type RootStackParamList = {
     CreateRoom: undefined;
-    Game: undefined;
+    Game: { roomCode?: string }; // TODO: Make this non nullable
     Home: undefined;
     JoinRoom: undefined;
     Lobby: undefined;

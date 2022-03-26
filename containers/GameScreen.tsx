@@ -4,7 +4,9 @@ import useSocket from "../hooks/useSocket";
 import CameraRoll from "@react-native-community/cameraroll";
 import { getBase64StringFromUri, getUri } from "../utils/images";
 
-const GameScreen = () => {
+type GameScreenProps = NativeStackScreenProps<RootStackParamList, "Game">;
+
+const GameScreen = ({ route }: GameScreenProps) => {
     const socket = useSocket();
     const [timer, setTimer] = useState<number>();
     const [base64Img, setBase64Img] = useState<string>();
