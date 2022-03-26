@@ -12,20 +12,26 @@ const CreateRoomScreen = ({ navigation }: CreateRoomScreenProps) => {
     const socket = useSocket();
     const [roomCode, setRoomCode] = useState<string>();
 
+    const onReady = () => {
+        socket.emit("readyToStart", roomCode);
+        navigation.navigate("Game", { roomCode: roomCode });
+    };
+
     useEffect(() => {
         socket.emit("createRoom", setRoomCode);
         return () => {
             socket.emit("leaveRooms");
         };
-    }, [socket]);
+    }, []);
 
     return (
         <VStack space={1} alignItems="center">
             <Text>Create Room - I am {socket.id}</Text>
             <Text>{roomCode}</Text>
             <UsersInRoom roomCode={roomCode}/>
-            <Button shadow={2}
-                onPress={() => navigation.navigate("Game")}>
+            <Button
+                onPress={onReady}
+                shadow={2}>
                 Ready
             </Button>
         </VStack>
