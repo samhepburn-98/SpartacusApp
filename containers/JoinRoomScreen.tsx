@@ -21,7 +21,6 @@ const JoinRoomScreen = ({ navigation }: JoinRoomScreenProps) => {
     const handleJoinRoom = useCallback((data) => {
         if (errors !== {}) console.log("e", errors);
         socket.emit("joinRoom", data.roomCode, navigateToLobby);
-        console.log(data);
     }, []);
 
     const navigateToLobby = (roomCode?: string) => {

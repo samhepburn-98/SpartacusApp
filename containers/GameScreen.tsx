@@ -1,46 +1,30 @@
 import React, { useEffect, useState } from "react";
-import { Image, Text, View } from "native-base";
 import useSocket from "../hooks/useSocket";
-import CameraRoll from "@react-native-community/cameraroll";
-import { getBase64StringFromUri, getUri } from "../utils/images";
+import SelectionScreen from "./SelectionScreen";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import { RootStackParamList } from "../navigation/Navigation";
 
 type GameScreenProps = NativeStackScreenProps<RootStackParamList, "Game">;
 
 const GameScreen = ({ route }: GameScreenProps) => {
     const socket = useSocket();
-    const [timer, setTimer] = useState<number>();
+    const { roomCode } = route.params;
     const [base64Img, setBase64Img] = useState<string>();
 
     useEffect(() => {
-        socket.emit("timer");
-        CameraRoll.getPhotos({ first: 1, include: ["filename", "imageSize"] })
-            .then(r => {
-                getUri(r)
-                    .then(async (uri) => {
-                        const base64String = await getBase64StringFromUri(uri);
-                        setBase64Img(base64String);
-                        socket.emit("sendImage", base64Img);
-                    });
-            });
-    }, [setBase64Img]);
+        socket.on("sendImageToRoom", (image) => {
+            setBase64Img(image);
+        });
 
-    useEffect(() => {
-        socket.on("timer", setTimer);
         return () => {
-            socket.off("timer", setTimer);
+            socket.off("sendImageToRoom", (image) => {
+                setBase64Img(image);
+            });
         };
-    }, [socket, setTimer]);
+    }, [socket]);
 
     return (
-        <View>
-            <Text>{timer}</Text>
-            <Image
-                alt="alt"
-                width="50%"
-                height="50%"
-                source={{ uri: base64Img }}/>
-            <Text>Hello world</Text>
-        </View>
+        <SelectionScreen roomCode={roomCode} uri={base64Img}/>
     );
 };
 
