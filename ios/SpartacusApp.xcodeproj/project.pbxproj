@@ -14,6 +14,7 @@
 		5B9D22C71CE57BF95B8EC3D5 /* libPods-SpartacusApp-SpartacusAppTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 44E8722C10181C5E4DEF8227 /* libPods-SpartacusApp-SpartacusAppTests.a */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 		F3FB67A2B92C5958CAC28FE2 /* libPods-SpartacusApp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2785894463ABAC2A177F0E52 /* libPods-SpartacusApp.a */; };
+		BD80F359DDE84E56BFD62097 /* MontserratAlternates-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 63AD980C60B644AE8C6A9C8D /* MontserratAlternates-Regular.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,6 +45,7 @@
 		BFA5DD57B2C2D9A3EEF38122 /* Pods-SpartacusApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SpartacusApp.release.xcconfig"; path = "Target Support Files/Pods-SpartacusApp/Pods-SpartacusApp.release.xcconfig"; sourceTree = "<group>"; };
 		E54C726123E167E3DCA2139B /* Pods-SpartacusApp-SpartacusAppTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SpartacusApp-SpartacusAppTests.release.xcconfig"; path = "Target Support Files/Pods-SpartacusApp-SpartacusAppTests/Pods-SpartacusApp-SpartacusAppTests.release.xcconfig"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
+		63AD980C60B644AE8C6A9C8D /* MontserratAlternates-Regular.ttf */ = {isa = PBXFileReference; name = "MontserratAlternates-Regular.ttf"; path = "../assets/fonts/MontserratAlternates-Regular.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -122,6 +124,7 @@
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
 				DB3D844388A5343454609201 /* Pods */,
+				6FC57E14809D4021A484EBC5 /* Resources */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -147,6 +150,15 @@
 			);
 			path = Pods;
 			sourceTree = "<group>";
+		};
+		6FC57E14809D4021A484EBC5 /* Resources */ = {
+			isa = "PBXGroup";
+			children = (
+				63AD980C60B644AE8C6A9C8D /* MontserratAlternates-Regular.ttf */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+			path = "";
 		};
 /* End PBXGroup section */
 
@@ -242,6 +254,7 @@
 			files = (
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
+				BD80F359DDE84E56BFD62097 /* MontserratAlternates-Regular.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
