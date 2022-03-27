@@ -7,18 +7,19 @@ import { GRADIENT_PAIRS } from "../assets/gradient-pairs";
 import LinearGradient from "react-native-linear-gradient";
 
 type GradientButtonProps = {
+    width?: number | string;
     isDisabled?: boolean;
     text: string;
     onPress: () => void;
 };
 
-const GradientButton = ({ isDisabled = false, onPress, text }: GradientButtonProps) => {
+const GradientButton = ({ isDisabled = false, onPress, text, width = "100%" }: GradientButtonProps) => {
     const colors: string[] = randomPropertyInObj(GRADIENT_PAIRS) as string[];
 
     return (
         <View style={{
             height: 50,
-            width: "50%"
+            width: width
         }}>
             <MaskedView
                 style={{ flex: 1, flexDirection: "row", height: "100%", alignSelf: "center" }}
@@ -31,7 +32,9 @@ const GradientButton = ({ isDisabled = false, onPress, text }: GradientButtonPro
                             alignItems: "center",
                         }}
                     >
-                        <Button variant="outline">
+                        <Button
+                            variant="outline"
+                            width="100%">
                             {text}
                         </Button>
                     </View>

@@ -67,11 +67,15 @@ const HomeScreen = ({ navigation }: HomeScreenProps) => {
             <GradientButton
                 isDisabled={!hasPhotoPermissions}
                 onPress={() => navigation.navigate("JoinRoom")}
-                text="Go to Create Room"/>
+                text="Create Room"
+                width="50%"
+            />
             <GradientButton
                 isDisabled={!hasPhotoPermissions}
                 onPress={() => navigation.navigate("CreateRoom")}
-                text="Go to Join Room"/>
+                text="Join Room"
+                width="50%"
+            />
         </VStack>
     );
 };
