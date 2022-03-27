@@ -1,10 +1,10 @@
 import { NativeBaseProvider } from "native-base";
 import React from "react";
 import { StyleSheet, useColorScheme } from "react-native";
-
 import { Colors } from "react-native/Libraries/NewAppScreen";
 import Navigation from "./navigation/Navigation";
 import { SocketProvider } from "./providers/SocketProvider";
+import { theme } from "./theme/theme";
 
 
 const App = () => {
@@ -15,7 +15,7 @@ const App = () => {
     };
 
     return (
-        <NativeBaseProvider>
+        <NativeBaseProvider theme={theme}>
             <SocketProvider>
                 <Navigation/>
             </SocketProvider>
