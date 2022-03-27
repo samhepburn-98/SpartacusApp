@@ -2,20 +2,17 @@ import React from "react";
 import { TouchableOpacity } from "react-native";
 import MaskedView from "@react-native-masked-view/masked-view";
 import { Button, View } from "native-base";
-import { randomPropertyInObj } from "../utils/funcs";
-import { GRADIENT_PAIRS } from "../assets/gradient-pairs";
 import LinearGradient from "react-native-linear-gradient";
 
 type GradientButtonProps = {
+    colors: string[];
     width?: number | string;
     isDisabled?: boolean;
     text: string;
     onPress: () => void;
 };
 
-const GradientButton = ({ isDisabled = false, onPress, text, width = "100%" }: GradientButtonProps) => {
-    const colors: string[] = randomPropertyInObj(GRADIENT_PAIRS) as string[];
-
+const GradientButton = ({ colors, isDisabled = false, onPress, text, width = "100%" }: GradientButtonProps) => {
     return (
         <View style={{
             height: 50,

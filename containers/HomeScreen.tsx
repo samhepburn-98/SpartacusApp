@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "../navigation/Navigation";
-import { Button, ITextProps, Text, useToast, VStack } from "native-base";
+import { ITextProps, Text, useToast, VStack } from "native-base";
 import { checkPhotoPermission, requestPhotoPermission, showPhotoPermissionToast } from "../utils/permissions";
 import { RESULTS } from "react-native-permissions";
 import MaskedView from "@react-native-masked-view/masked-view";
@@ -44,33 +44,16 @@ const HomeScreen = ({ navigation }: HomeScreenProps) => {
     return (
         <VStack space={1} alignItems="center">
             <GradientText style={styles.test}>Spartacus</GradientText>
-            <Button
-                isDisabled={!hasPhotoPermissions}
-                onPress={() => navigation.navigate("CreateRoom")}
-                shadow={2}
-                colorScheme="primary"
-                variant="outline"
-                width="50%"
-            >
-                Go to Create Room
-            </Button>
-            <Button
-                isDisabled={!hasPhotoPermissions}
-                onPress={() => navigation.navigate("JoinRoom")}
-                shadow={2}
-                variant="outline"
-                width="50%"
-            >
-                Go to Join Room
-            </Button>
             <Text color="primary.50">Hello world</Text>
             <GradientButton
+                colors={colors}
                 isDisabled={!hasPhotoPermissions}
                 onPress={() => navigation.navigate("JoinRoom")}
                 text="Create Room"
                 width="50%"
             />
             <GradientButton
+                colors={colors}
                 isDisabled={!hasPhotoPermissions}
                 onPress={() => navigation.navigate("CreateRoom")}
                 text="Join Room"
