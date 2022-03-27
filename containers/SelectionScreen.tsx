@@ -1,38 +1,73 @@
-import { Image, View } from "native-base";
-import React, { useEffect } from "react";
+import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { Button, Image, Text, View } from "native-base";
 import useSocket from "../hooks/useSocket";
 import CameraRoll from "@react-native-community/cameraroll";
 import { getBase64StringFromUri, getUri } from "../utils/images";
 import { Socket } from "socket.io-client";
 
 type SelectionScreenProps = {
+    onContinue: Dispatch<SetStateAction<"selection" | "results">>;
     roomCode?: string;
     uri?: string;
+    users?: string[];
 }
 
-const SelectionScreen = ({ roomCode, uri }: SelectionScreenProps) => {
+const SelectionScreen = ({ onContinue, roomCode, uri, users }: SelectionScreenProps) => {
     const socket = useSocket();
+    const [voteSubmitted, setVoteSubmitted] = useState<boolean>(false);
+
+    const submitVote = (id: string) => {
+        socket.emit("submitVote", id);
+        setVoteSubmitted(true);
+    };
+
+    const allVotesReceived = () => {
+        onContinue("results");
+    };
 
     useEffect(() => {
         socket.on("requestImage", (imgPosition) => getImage(socket, imgPosition, roomCode));
+        socket.on("allVotesReceived", () => allVotesReceived());
         return () => {
             socket.off("requestImage", (imgPosition) => getImage(socket, imgPosition, roomCode));
+            socket.off("allVotesReceived", () => allVotesReceived());
         };
     }, [socket]);
 
     return (
         <View>
+
             <Image
                 alt="alt"
                 width="50%"
                 height="50%"
                 source={{ uri: uri }}/>
+
+            {
+                !voteSubmitted &&
+                users?.map((user) =>
+                    <Button
+                        key={user}
+                        onPress={() => submitVote(user)}
+                    >
+                        {user}
+                    </Button>)
+            }
+
+            {
+                voteSubmitted &&
+                <View>
+                    <Text>Vote submitted</Text>
+                    <Text>Waiting for rest of room to submit votes</Text>
+                </View>
+            }
+
         </View>
     );
 };
 
 const getImage = (socket: Socket, imgPosition: number, roomCode?: string) => {
-    CameraRoll.getPhotos({ first: imgPosition, include: ["filename", "imageSize"] })
+    CameraRoll.getPhotos({ first: imgPosition, include: ["imageSize"] })
         .then(results => {
             // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
             const selectedImg = results.edges.pop()!;
