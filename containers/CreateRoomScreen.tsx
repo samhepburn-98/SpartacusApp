@@ -2,9 +2,10 @@ import React, { useEffect, useState } from "react";
 import { Text } from "react-native";
 import UsersInRoom from "../components/UsersInRoom";
 import useSocket from "../hooks/useSocket";
-import { Button, VStack } from "native-base";
+import { VStack } from "native-base";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "../navigation/Navigation";
+import GradientButton from "../components/GradientButton";
 
 type CreateRoomScreenProps = NativeStackScreenProps<RootStackParamList, "JoinRoom">;
 
@@ -29,11 +30,11 @@ const CreateRoomScreen = ({ navigation }: CreateRoomScreenProps) => {
             <Text>Create Room - I am {socket.id}</Text>
             <Text>{roomCode}</Text>
             <UsersInRoom roomCode={roomCode}/>
-            <Button
+            <GradientButton
                 onPress={onReady}
-                shadow={2}>
-                Ready
-            </Button>
+                text="Ready"
+                width="50%"
+            />
         </VStack>
     );
 };

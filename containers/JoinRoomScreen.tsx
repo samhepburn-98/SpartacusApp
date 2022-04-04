@@ -1,11 +1,12 @@
 import React, { useCallback, useEffect } from "react";
-import { Alert, Button, Text } from "react-native";
+import { Alert, Text } from "react-native";
 import { useForm } from "react-hook-form";
 import useSocket from "../hooks/useSocket";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "../navigation/Navigation";
 import CodeInput from "../components/CodeInput";
 import { VStack } from "native-base";
+import GradientButton from "../components/GradientButton";
 
 export type FormData = {
     roomCode: string;
@@ -55,9 +56,10 @@ const JoinRoomScreen = ({ navigation }: JoinRoomScreenProps) => {
             <CodeInput control={control}/>
             {errors.roomCode?.types?.required && <Text>This is required.</Text>}
             {errors.roomCode?.types?.minLength && <Text>Please enter all 4 characters.</Text>}
-            <Button
+            <GradientButton
                 onPress={handleSubmit(handleJoinRoom)}
-                title="Enter"
+                text="Enter"
+                width="50%"
             />
         </VStack>
     );

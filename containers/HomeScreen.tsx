@@ -6,17 +6,16 @@ import { checkPhotoPermission, requestPhotoPermission, showPhotoPermissionToast 
 import { RESULTS } from "react-native-permissions";
 import MaskedView from "@react-native-masked-view/masked-view";
 import LinearGradient from "react-native-linear-gradient";
-import { randomPropertyInObj } from "../utils/funcs";
-import { GRADIENT_PAIRS } from "../assets/gradient-pairs";
 import GradientButton from "../components/GradientButton";
 import { PixelRatio, StyleSheet } from "react-native";
+import useColors from "../hooks/useColors";
 
 type HomeScreenProps = NativeStackScreenProps<RootStackParamList, "Home">;
 
 const HomeScreen = ({ navigation }: HomeScreenProps) => {
     const toast = useToast();
     const [hasPhotoPermissions, setHasPhotoPermissions] = useState<boolean>(false);
-    const colors: string[] = randomPropertyInObj(GRADIENT_PAIRS) as string[];
+    const [colors] = useColors();
     useEffect(() => {
         checkPhotoPermission()
             .then(result => {
@@ -24,7 +23,7 @@ const HomeScreen = ({ navigation }: HomeScreenProps) => {
                 else requestPhotoPermission()
                     .then(result => showPhotoPermissionToast(result, toast));
             });
-    }, []);
+    }, [colors]);
 
 
     const GradientText = (props: JSX.IntrinsicAttributes & ITextProps & React.RefAttributes<unknown>) => {
@@ -44,18 +43,15 @@ const HomeScreen = ({ navigation }: HomeScreenProps) => {
     return (
         <VStack space={1} alignItems="center">
             <GradientText style={styles.test}>Spartacus</GradientText>
-            <Text color="primary.50">Hello world</Text>
             <GradientButton
-                colors={colors}
                 isDisabled={!hasPhotoPermissions}
-                onPress={() => navigation.navigate("JoinRoom")}
+                onPress={() => navigation.navigate("CreateRoom")}
                 text="Create Room"
                 width="50%"
             />
             <GradientButton
-                colors={colors}
                 isDisabled={!hasPhotoPermissions}
-                onPress={() => navigation.navigate("CreateRoom")}
+                onPress={() => navigation.navigate("JoinRoom")}
                 text="Join Room"
                 width="50%"
             />
