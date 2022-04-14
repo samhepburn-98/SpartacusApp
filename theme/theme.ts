@@ -1,4 +1,4 @@
-import { extendTheme } from "native-base";
+import { extendTheme, themeTools } from "native-base";
 
 export const theme = extendTheme({
     colors: {
@@ -26,6 +26,34 @@ export const theme = extendTheme({
                 rounded: "sm",
                 fontFamily: "MontserratAlternates-Regular",
                 fontWeight: "normal",
+            },
+        },
+        Heading: {
+            baseStyle: (props) => {
+                return {
+                    color: themeTools.mode("dark.100", "light.100")(props),
+                };
+            },
+        },
+        Text: {
+            baseStyle: (props) => {
+                return {
+                    color: themeTools.mode("dark.100", "light.100")(props),
+                };
+            },
+        },
+        Icon: {
+            baseStyle: (props) => {
+                return {
+                    color: themeTools.mode("dark.100", "light.100")(props),
+                };
+            },
+        },
+        View: {
+            baseStyle: (props: Record<string, never>) => {
+                return {
+                    bg: themeTools.mode("light.100", "dark.100")(props),
+                };
             },
         },
     },

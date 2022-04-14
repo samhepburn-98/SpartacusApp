@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { Text } from "react-native";
 import UsersInRoom from "../components/UsersInRoom";
 import useSocket from "../hooks/useSocket";
-import { VStack } from "native-base";
+import { Text, VStack } from "native-base";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "../navigation/Navigation";
 import GradientButton from "../components/GradientButton";

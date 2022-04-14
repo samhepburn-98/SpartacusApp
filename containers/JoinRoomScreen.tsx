@@ -1,11 +1,11 @@
 import React, { useCallback, useEffect } from "react";
-import { Alert, Text } from "react-native";
+import { Alert } from "react-native";
+import { Text, VStack } from "native-base";
 import { useForm } from "react-hook-form";
 import useSocket from "../hooks/useSocket";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "../navigation/Navigation";
 import CodeInput from "../components/CodeInput";
-import { VStack } from "native-base";
 import GradientButton from "../components/GradientButton";
 
 export type FormData = {
