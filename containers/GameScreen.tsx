@@ -19,7 +19,7 @@ const GameScreen = ({ route }: GameScreenProps) => {
         if (roomCode) socket.emit("getUsers", roomCode);
         socket.on("usersInRoom", setUsers);
         return () => {
-            socket.on("usersInRoom", setUsers);
+            socket.off("usersInRoom", setUsers);
         };
     }, [socket, roomCode, setUsers]);
 
