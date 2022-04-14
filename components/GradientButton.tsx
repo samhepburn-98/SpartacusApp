@@ -1,9 +1,9 @@
-import React, { useEffect } from "react";
+import React, { useContext } from "react";
 import { TouchableOpacity } from "react-native";
 import MaskedView from "@react-native-masked-view/masked-view";
 import { Button, View } from "native-base";
 import LinearGradient from "react-native-linear-gradient";
-import useColors from "../hooks/useColors";
+import { ColorsContext } from "../providers/ColorsProvider";
 
 type GradientButtonProps = {
     width?: number | string;
@@ -13,14 +13,11 @@ type GradientButtonProps = {
 };
 
 const GradientButton = ({ isDisabled = false, onPress, text, width = "100%" }: GradientButtonProps) => {
-    const [colors] = useColors();
-
-    // eslint-disable-next-line @typescript-eslint/no-empty-function
-    useEffect(() => {}, [colors]);
+    const colors = useContext(ColorsContext);
 
     return (
         <View style={{
-            height: 50,
+            minHeight: 50,
             width: width
         }}>
             <MaskedView

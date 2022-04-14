@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "../navigation/Navigation";
 import { ITextProps, Text, useToast, VStack } from "native-base";
@@ -8,14 +8,15 @@ import MaskedView from "@react-native-masked-view/masked-view";
 import LinearGradient from "react-native-linear-gradient";
 import GradientButton from "../components/GradientButton";
 import { PixelRatio, StyleSheet } from "react-native";
-import useColors from "../hooks/useColors";
+import { ColorsContext } from "../providers/ColorsProvider";
 
 type HomeScreenProps = NativeStackScreenProps<RootStackParamList, "Home">;
 
 const HomeScreen = ({ navigation }: HomeScreenProps) => {
+    const colors = useContext(ColorsContext);
+
     const toast = useToast();
     const [hasPhotoPermissions, setHasPhotoPermissions] = useState<boolean>(false);
-    const [colors] = useColors();
     useEffect(() => {
         checkPhotoPermission()
             .then(result => {
@@ -23,8 +24,7 @@ const HomeScreen = ({ navigation }: HomeScreenProps) => {
                 else requestPhotoPermission()
                     .then(result => showPhotoPermissionToast(result, toast));
             });
-    }, [colors]);
-
+    }, []);
 
     const GradientText = (props: JSX.IntrinsicAttributes & ITextProps & React.RefAttributes<unknown>) => {
         return (
