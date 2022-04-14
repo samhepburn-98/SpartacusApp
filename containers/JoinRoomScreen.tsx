@@ -7,6 +7,7 @@ import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "../navigation/Navigation";
 import CodeInput from "../components/CodeInput";
 import GradientButton from "../components/GradientButton";
+import FullHeightView from "../components/FullHeightView";
 
 export type FormData = {
     roomCode: string;
@@ -49,19 +50,21 @@ const JoinRoomScreen = ({ navigation }: JoinRoomScreenProps) => {
     }, [socket]);
 
     return (
-        <VStack space={1} alignItems="center">
-            <Text>
-                Join Room - I am {socket.id}
-            </Text>
-            <CodeInput control={control}/>
-            {errors.roomCode?.types?.required && <Text>This is required.</Text>}
-            {errors.roomCode?.types?.minLength && <Text>Please enter all 4 characters.</Text>}
-            <GradientButton
-                onPress={handleSubmit(handleJoinRoom)}
-                text="Enter"
-                width="50%"
-            />
-        </VStack>
+        <FullHeightView>
+            <VStack space={1} alignItems="center">
+                <Text>
+                    Join Room - I am {socket.id}
+                </Text>
+                <CodeInput control={control}/>
+                {errors.roomCode?.types?.required && <Text>This is required.</Text>}
+                {errors.roomCode?.types?.minLength && <Text>Please enter all 4 characters.</Text>}
+                <GradientButton
+                    onPress={handleSubmit(handleJoinRoom)}
+                    text="Enter"
+                    width="50%"
+                />
+            </VStack>
+        </FullHeightView>
     );
 };
 

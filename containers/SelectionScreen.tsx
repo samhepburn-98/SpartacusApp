@@ -1,9 +1,10 @@
 import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
-import { Button, Image, Text, View } from "native-base";
+import { Box, Image, Spinner, Text, View } from "native-base";
 import useSocket from "../hooks/useSocket";
 import CameraRoll from "@react-native-community/cameraroll";
 import { getBase64StringFromUri, getUri } from "../utils/images";
 import { Socket } from "socket.io-client";
+import GradientButton from "../components/GradientButton";
 
 type SelectionScreenProps = {
     onContinue: Dispatch<SetStateAction<"selection" | "results">>;
@@ -35,23 +36,28 @@ const SelectionScreen = ({ onContinue, roomCode, uri, users }: SelectionScreenPr
     }, [socket]);
 
     return (
-        <View>
-
+        <View style={{ alignItems: "center" }}>
             <Image
                 alt="alt"
                 width="50%"
                 height="50%"
                 source={{ uri: uri }}/>
+            {
+                !uri &&
+                <Spinner size="lg"/>
+            }
 
             {
                 !voteSubmitted &&
                 users?.map((user) =>
-                    <Button
-                        key={user}
-                        onPress={() => submitVote(user)}
-                    >
-                        {user}
-                    </Button>)
+                    <Box key={user} py={1}>
+                        <GradientButton
+                            onPress={() => submitVote(user)}
+                            text={user}
+                            width="50%"
+                        />
+                    </Box>
+                )
             }
 
             {

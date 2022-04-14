@@ -5,6 +5,7 @@ import { Text, VStack } from "native-base";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "../navigation/Navigation";
 import GradientButton from "../components/GradientButton";
+import FullHeightView from "../components/FullHeightView";
 
 type CreateRoomScreenProps = NativeStackScreenProps<RootStackParamList, "JoinRoom">;
 
@@ -25,16 +26,18 @@ const CreateRoomScreen = ({ navigation }: CreateRoomScreenProps) => {
     }, []);
 
     return (
-        <VStack space={1} alignItems="center">
-            <Text>Create Room - I am {socket.id}</Text>
-            <Text>{roomCode}</Text>
-            <UsersInRoom roomCode={roomCode}/>
-            <GradientButton
-                onPress={onReady}
-                text="Ready"
-                width="50%"
-            />
-        </VStack>
+        <FullHeightView>
+            <VStack space={1} alignItems="center">
+                <Text>Create Room - I am {socket.id}</Text>
+                <Text>{roomCode}</Text>
+                <UsersInRoom roomCode={roomCode}/>
+                <GradientButton
+                    onPress={onReady}
+                    text="Ready"
+                    width="50%"
+                />
+            </VStack>
+        </FullHeightView>
     );
 };
 

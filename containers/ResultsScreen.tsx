@@ -7,7 +7,8 @@ type ResultsScreenProps = {
 
 const ResultsScreen = ({ onContinue }: ResultsScreenProps) => {
     return (
-        <Text>Helloworld</Text>
+        <Text>Hello world</Text>
+
     );
 };
 
