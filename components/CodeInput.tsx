@@ -1,15 +1,22 @@
-import React, { useState } from "react";
-import { Platform, StyleSheet, Text, View } from "react-native";
-import { CodeField, Cursor, useBlurOnFulfill, useClearByFocusCell, } from "react-native-confirmation-code-field";
+import React, { useContext, useState } from "react";
 import { Control, Controller } from "react-hook-form";
+import { SafeAreaView, StyleSheet, Text, View } from "react-native";
+import {
+    CodeField,
+    Cursor,
+    useBlurOnFulfill,
+    useClearByFocusCell,
+} from "react-native-confirmation-code-field";
+import { ColorsContext } from "../providers/ColorsProvider";
 import { FormData } from "../containers/JoinRoomScreen";
+import { ColorMode, useColorMode } from "native-base";
+import { theme } from "../theme/theme";
 
 const CELL_COUNT = 4;
 
 type CodeInputProps = {
     control: Control<FormData>;
 }
-
 const CodeInput = ({ control }: CodeInputProps) => {
     const [value, setValue] = useState("");
     const ref = useBlurOnFulfill({ value, cellCount: CELL_COUNT });
@@ -18,123 +25,92 @@ const CodeInput = ({ control }: CodeInputProps) => {
         setValue,
     });
 
+    const { colorMode } = useColorMode();
+    const styles = makeStyles(colorMode);
+
     return (
-        <View>
-            <Controller
-                control={control}
-                name="roomCode"
-                render={({ field: { onChange, onBlur, value } }) => (
-                    <CodeField
-                        ref={ref}
-                        {...props}
-                        // Use `caretHidden={false}` when users can't paste a text value, because context menu doesn't appear
-                        value={value}
-                        onBlur={onBlur}
-                        onChangeText={onChange}
-                        cellCount={CELL_COUNT}
-                        rootStyle={styles.codeFieldRoot}
-                        keyboardType="default"
-                        textContentType="oneTimeCode"
-                        renderCell={({ index, symbol, isFocused }) => (
-                            <Text
-                                key={index}
-                                style={[styles.cell, isFocused && styles.focusCell]}
-                                onLayout={getCellOnLayoutHandler(index)}>
-                                {symbol || (isFocused ? <Cursor/> : null)}
-                            </Text>
-                        )}
-                    />
-                )}
-                rules={{
-                    minLength: CELL_COUNT,
-                    maxLength: CELL_COUNT,
-                    required: true
-                }}
-            />
-        </View>
+        <SafeAreaView style={styles.root}>
+            <View>
+                <Controller
+                    control={control}
+                    name="roomCode"
+                    render={({ field: { onChange, onBlur, value } }) => (
+                        <CodeField
+                            ref={ref}
+                            {...props}
+                            value={value}
+                            onBlur={onBlur}
+                            onChangeText={onChange}
+                            cellCount={CELL_COUNT}
+                            rootStyle={styles.codeFieldRoot}
+                            keyboardType="default"
+                            textContentType="oneTimeCode"
+                            renderCell={({ index, symbol, isFocused }) => (
+                                <View
+                                    // Make sure that you pass onLayout={getCellOnLayoutHandler(index)} prop to root component of "Cell"
+                                    onLayout={getCellOnLayoutHandler(index)}
+                                    key={index}
+                                    style={[
+                                        styles.cellRoot,
+                                        isFocused && styles.focusCell,
+                                        getIndexGradient(index),
+                                    ]}
+                                >
+                                    <Text style={styles.cellText}>
+                                        {symbol || (isFocused ? <Cursor/> : null)}
+                                    </Text>
+                                </View>
+                            )}
+                        />
+                    )}
+                    rules={{
+                        minLength: CELL_COUNT,
+                        maxLength: CELL_COUNT,
+                        required: true
+                    }}
+                />
+            </View>
+        </SafeAreaView>
     );
 };
 
-export const CELL_SIZE = 70;
-export const CELL_BORDER_RADIUS = 8;
-export const DEFAULT_CELL_BG_COLOR = "#fff";
-export const NOT_EMPTY_CELL_BG_COLOR = "#3557b7";
-export const ACTIVE_CELL_BG_COLOR = "#f7fafe";
+const getIndexGradient = (index: number) => {
+    const colors = useContext(ColorsContext);
+    return {
+        borderBottomColor: colors[index],
+        fontFamily: "MontserratAlternates-Regular",
+    };
+};
 
-const styles = StyleSheet.create({
-    codeFieldRoot: {
-        height: CELL_SIZE,
-        marginTop: 30,
-        paddingHorizontal: 20,
-        justifyContent: "center",
-    },
-    cell: {
-        marginHorizontal: 8,
-        height: CELL_SIZE,
-        width: CELL_SIZE,
-        lineHeight: CELL_SIZE - 5,
-        ...Platform.select({ web: { lineHeight: 65 } }),
-        fontSize: 30,
-        textAlign: "center",
-        borderRadius: CELL_BORDER_RADIUS,
-        color: "#3759b8",
-        backgroundColor: "#fff",
-
-        // IOS
-        // shadowColor: "#000",
-        // shadowOffset: {
-        //     width: 0,
-        //     height: 1,
-        // },
-        // shadowOpacity: 0.22,
-        // shadowRadius: 100,
-
-        // Android
-        // elevation: 3,
-    },
-
-    // =======================
-
+const makeStyles = (colorMode: ColorMode) => StyleSheet.create({
     root: {
-        minHeight: 800,
-        padding: 20,
+        padding: 20
     },
-    title: {
-        paddingTop: 50,
-        color: "#000",
-        fontSize: 25,
-        fontWeight: "700",
-        textAlign: "center",
-        paddingBottom: 40,
-    },
-    icon: {
-        width: 217 / 2.4,
-        height: 158 / 2.4,
+    codeFieldRoot: {
+        marginTop: 20,
+        width: 280,
         marginLeft: "auto",
         marginRight: "auto",
     },
-    subTitle: {
-        paddingTop: 30,
-        color: "#000",
-        textAlign: "center",
-    },
-    nextButton: {
-        marginTop: 30,
-        borderRadius: 60,
+    cellRoot: {
+        width: 60,
         height: 60,
-        backgroundColor: "#3557b7",
         justifyContent: "center",
-        minWidth: 300,
-        marginBottom: 100,
+        alignItems: "center",
+        borderBottomColor: "#ccc",
+        borderBottomWidth: 0.5,
     },
-    nextButtonText: {
+    cellText: {
+        color: colorMode === "light"
+            ? theme.colors.dark["200"]
+            : theme.colors.light["200"],
+        fontSize: 32,
         textAlign: "center",
-        fontSize: 20,
-        color: "#fff",
-        fontWeight: "700",
+        fontFamily: "MontserratAlternates-Regular",
     },
     focusCell: {
-        borderColor: "#000",
+        borderBottomColor: "#007AFF",
+        borderBottomWidth: 2,
     },
 });
 
