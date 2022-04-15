@@ -38,6 +38,7 @@ export const theme = extendTheme({
         Text: {
             baseStyle: (props) => {
                 return {
+                    fontFamily: "MontserratAlternates-Regular",
                     color: themeTools.mode("dark.100", "light.100")(props),
                 };
             },
