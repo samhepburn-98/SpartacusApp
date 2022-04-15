@@ -6,15 +6,16 @@ import { theme } from "./theme/theme";
 import { randomPropertyInObj } from "./utils/funcs";
 import { GRADIENT_PAIRS } from "./assets/gradient-pairs";
 import { ColorsProvider } from "./providers/ColorsProvider";
+import AppStatusBar from "./components/AppStatusBar";
 
 
 const App = () => {
     const randomColors: string[] = randomPropertyInObj(GRADIENT_PAIRS) as string[];
-
     return (
         <NativeBaseProvider theme={theme}>
             <ColorsProvider value={randomColors}>
                 <SocketProvider>
+                    <AppStatusBar/>
                     <Navigation/>
                 </SocketProvider>
             </ColorsProvider>

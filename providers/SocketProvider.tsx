@@ -7,7 +7,7 @@ export const socket = io(SOCKET_URL);
 export const SocketContext = createContext(socket);
 
 interface ISocketProvider {
-    children: ReactChild;
+    children: ReactChild | ReactChild[];
 }
 
 export const SocketProvider = (props: ISocketProvider) => {
